@@ -69,14 +69,10 @@ void setup() {
   reset_traf_lights();
   reset_ped_lights();
 
-  traf_state = NS_GREEN;
-  last_traf_change = millis();
-  traf_state_changed = true;
+  // initial state
+  transition_traf(NS_GREEN);
+  transition_ped(OFF);
 
-  last_ped_change = millis();
-  ped_state = OFF;
-  ped_state_changed = true;
-  
   update_lights();
 }
 
@@ -87,6 +83,7 @@ void loop() {
 
 void update_lights() {
   if (traf_state_changed) {
+    // todo don't reset everything on transitions
     reset_traf_lights();
   
     Serial.println("traf light state: " + String(traf_state));
@@ -121,6 +118,7 @@ void update_lights() {
   }
 
   if (ped_state_changed) {
+    // todo don't reset everything on transitions
     reset_ped_lights();
 
     Serial.println("ped light state: " + String(ped_state));
